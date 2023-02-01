@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:song_guess/constants/color.dart';
 import 'package:song_guess/constants/spotify_image_view.dart';
-import 'package:song_guess/models/top_items_model.dart';
+import 'package:song_guess/models/top_playlist_model.dart';
 
 class MusicItem extends StatelessWidget {
   Items items;
@@ -29,7 +29,7 @@ class MusicItem extends StatelessWidget {
                 Container(
                   height: 40,
                   width: 40,
-                  child: SpotifyImageView(image: '${items.album!.images![0].url}',),
+                  child: SpotifyImageView(image: '${items.track!.album!.images![0].url}',),
                 ),
               ],
             ),
@@ -40,13 +40,13 @@ class MusicItem extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Text(
-                  "${items.album!.name}",
+                  "${items.track?.album!.name}",
                   style: const TextStyle(
                       color: Colors.white, fontWeight: FontWeight.bold),
                 ),
                 const SizedBox(height: 5),
                 Text(
-                  "${items.album!.artists![0].name}",
+                  "${items.track?.album!.artists![0].name}",
                   style: const TextStyle(color: Colors.white, fontSize: 11),
                 ),
               ],

@@ -6,7 +6,6 @@ import 'package:song_guess/main.dart';
 import 'package:song_guess/providers.dart';
 import 'package:song_guess/service/spotify_service.dart';
 import 'package:song_guess/view/albums/albums_view.dart';
-import 'package:flutter/foundation.dart' show kIsWeb;
 
 class GetStartVM extends ChangeNotifier{
 

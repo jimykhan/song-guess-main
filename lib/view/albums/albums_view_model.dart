@@ -5,12 +5,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:song_guess/models/top_items_model.dart';
+import 'package:song_guess/models/top_playlist_model.dart';
 import 'package:song_guess/providers.dart';
 import 'package:song_guess/service/spotify_service.dart';
 import 'package:spotify_sdk/spotify_sdk.dart';
 
 class AlbumsVM extends ChangeNotifier{
   TopItemsModel? topItemsModel;
+  TopPlayList? topPlayList;
   ProviderReference? _ref;
   SpotifyService? spotifyService;
   Timer? _timer;
@@ -61,10 +63,21 @@ class AlbumsVM extends ChangeNotifier{
     setLoadingAlbum(false);
   }
 
+  getTopPlayList() async {
+    EasyLoading.show(status: "Loading",dismissOnTap: false);
+    // setLoadingAlbum(true);
+    var result = await spotifyService?.getTopPlayList();
+    if(result != null){
+      topPlayList = result;
+      startRandomSong();
+    }
+    setLoadingAlbum(false);
+  }
+
   startRandomSong() async {
     Random random = new Random();
-    int randomIndex = random.nextInt(topItemsModel?.items?.length??0);
-    String albumLink = topItemsModel!.items![randomIndex].album!.uri!;
+    int randomIndex = random.nextInt(topPlayList?.tracks?.items?.length??0);
+    String albumLink = topPlayList!.tracks!.items![randomIndex].track!.album!.uri!;
     await play(albumLink);
     startTimer();
   }

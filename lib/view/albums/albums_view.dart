@@ -20,7 +20,7 @@ class AlbumsView extends HookWidget {
     AlbumsVM albumsVM = useProvider(albumsVMProvider);
     useEffect(
           () {
-        albumsVM.getTopItems();
+        albumsVM.getTopPlayList();
         Future.microtask(() async {
 
         });
@@ -56,11 +56,11 @@ class AlbumsView extends HookWidget {
                   shrinkWrap: true,
                   physics: ScrollPhysics(),
                   itemBuilder: (BuildContext context, int index) {
-                    return MusicItem(items: albumsVM.topItemsModel!.items![index],);
+                    return MusicItem(items: albumsVM.topPlayList!.tracks!.items![index],);
                   },
                   separatorBuilder: (BuildContext context, int index) {
                     return SizedBox(height: 15,);
-                  }, itemCount: albumsVM.topItemsModel?.items?.length??0,),
+                  }, itemCount: albumsVM.topPlayList?.tracks?.items?.length??0,),
               ),
             Container(
               child: playWidget(),
