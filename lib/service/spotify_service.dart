@@ -7,6 +7,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:hooks_riverpod/all.dart';
 import 'package:song_guess/models/top_items_model.dart';
+import 'package:song_guess/models/top_playlist_model.dart';
 import 'package:spotify_sdk/models/crossfade_state.dart';
 import 'package:spotify_sdk/platform_channels.dart';
 import 'package:spotify_sdk/spotify_sdk.dart';
@@ -306,6 +307,30 @@ class SpotifyService {
       print("This gettopitem respose code ${res?.statusCode}");
       if (res?.statusCode == 200) {
         topItemsModel = TopItemsModel.fromJson(res!.data);
+        print("${res.data}");
+      }
+      return topItemsModel;
+    } catch (ex) {
+      print("$ex");
+      return topItemsModel;
+    }
+  }
+
+  Future<TopPlayList?> getTopPlayList() async {
+    TopPlayList? topItemsModel;
+    try {
+      print("$currentUserAccessToken");
+      Response? res = await dio?.get(
+          "$host/v1/playlists/6gegGeB5zoYZ0cboKww43s",
+          options: Options(
+            headers: {
+              'Authorization': 'Bearer $currentUserAccessToken',
+              'Content-Type': 'application/json'
+            },
+          ));
+      print("This gettopitem respose code ${res?.statusCode}");
+      if (res?.statusCode == 200) {
+        topItemsModel = TopPlayList.fromJson(res!.data);
         print("${res.data}");
       }
       return topItemsModel;
